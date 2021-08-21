@@ -1,2 +1,2 @@
 # dwm
-My dwm rice
+My dwm rice - forked from https://git.suckless.org/dwm.
