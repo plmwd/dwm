@@ -3,6 +3,7 @@
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
+static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "monospace:size=10" };
@@ -26,11 +27,11 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor    scratch key */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1,        0  },
-	{ "firefox",  NULL,       NULL,       1 << 8,       0,           -1,        0  },
-	{ NULL,       NULL,   "scratchpad",   0,            1,           -1,       's' },
-};
+	/* class      instance    title       tags mask     isfloating  isterminal  CenterThisWindow  noswallow   monitor    scratch key */
+	{ "Gimp",     NULL,       NULL,       0,            1,          0,          1,                 0,         -1,        0  },
+	{ "firefox",  NULL,       NULL,       1 << 8,       0,          0,          1,                -1,         -1,        0  },
+	{ NULL,       NULL,   "scratchpad",   0,            1,          1,          1,                 0,         -1,       's' },
+};                                                                      
 
 /* layout(s) */
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
@@ -91,6 +92,7 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_period, cyclelayout,    {.i = +1 } },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
+	{ MODKEY,                       XK_s,      togglesticky,   {0} },
 	{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
