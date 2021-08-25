@@ -1,0 +1,6 @@
+#!/bin/zsh
+# https://github.com/mihirlad55/dwm/blob/patched/startdwm
+
+while true; do
+    dwm 2>&1 | while read line; do echo "[$(date "+%b %d %T")] $line" >> ~/.dwm.log; done
+done

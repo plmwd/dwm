@@ -29,7 +29,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "www", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -37,6 +37,7 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating  isterminal  CenterThisWindow  noswallow   monitor    scratch key */
+	{ "kitty",    NULL,       NULL,       0, 	    0,          1,          1,                 0,         -1,        0  },
 	{ "Gimp",     NULL,       NULL,       0,            1,          0,          1,                 0,         -1,        0  },
 	{ "firefox",  NULL,       NULL,       1 << 8,       0,          0,          1,                -1,         -1,        0  },
 	{ NULL,       NULL,   "scratchpad",   0,            1,          1,          1,                 0,         -1,       's' },
@@ -86,6 +87,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "kitty", NULL };
+static const char *logoutcmd[] = { "killall", "startdwm", NULL};
 
 /*First arg only serves to match against key in rules*/
 static const char *scratchpadcmd[] = {"s", "kitty", "-t", "scratchpad", NULL}; 
@@ -105,6 +107,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_f,      togglefullscr,  {0} },
 	{ MODKEY|ShiftMask,             XK_q,      killclient,     {0} },
 	{ MODKEY|ControlMask,		XK_q,	   quit,	   {0} },
+	{ MODKEY|ControlMask,		XK_x,      spawn,	   {.v = logoutcmd } },
 
 	// Layout
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
