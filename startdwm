@@ -1,6 +1,23 @@
 #!/bin/zsh
 # https://github.com/mihirlad55/dwm/blob/patched/startdwm
+# test
 
+logfile=/home/paulw/.dwm.log
+
+dwmlog() {
+  string="[$(date "+%b %d %T")] DWM: "
+  if [[ -n "$@" ]]; then
+    echo "$string$@" >> $logfile
+  else
+    read X && echo "$string$X" >> $logfile
+  fi
+}
+
+dwmlog "Starting DWM"
 while true; do
-    dwm 2>&1 | while read line; do echo "[$(date "+%b %d %T")] $line" >> ~/.dwm.log; done
+  dwm 2>> $logfile >> $logfile
+  #dwm 2>&1 | log
+  rm /tmp/dwm.sock
+  killall -q polybar
+  dmwlog "Restarting DWM..."
 done
