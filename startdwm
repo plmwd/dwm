@@ -13,20 +13,13 @@ dwmlog() {
   fi
 }
 
-[[ -f $HOME/.autostart.zsh ]] && \
-  dwmlog "Running autostart: $HOME/.autostart.zsh" \
-  source $HOME/.autostart 
-
-[[ -f $HOME/.config/dwm/autostart.zsh ]] && \
-  dwmlog "Running autostart: $HOME/.config/dwm/autostart.zsh" \
-  source $HOME/.config/dwm/autostart.zsh
-
-dwmlog "Starting DWM"
+dwmlog "Starting DWM..."
 while true; do
-  # Temp fix
+  # Temp fix for logging
   dwm 2>> $logfile >> $logfile
-  #dwm 2>&1 | log
+
+  # Cleanup
+  dwmlog "Restarting DWM..."
   rm /tmp/dwm.sock
   killall -q polybar
-  dmwlog "Restarting DWM..."
 done

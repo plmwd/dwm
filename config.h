@@ -37,10 +37,10 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating  isterminal  CenterThisWindow  noswallow   monitor    scratch key */
-	{ "kitty",    NULL,       NULL,       0, 	    0,          1,          1,                 0,         -1,        0  },
-	{ "Gimp",     NULL,       NULL,       0,            1,          0,          1,                 0,         -1,        0  },
-	{ "firefox",  NULL,       NULL,       1 << 8,       0,          0,          1,                -1,         -1,        0  },
-	{ NULL,       NULL,   "scratchpad",   0,            1,          1,          1,                 0,         -1,       's' },
+	{ "kitty",    NULL,       NULL,       0, 	    0,          1,          0,                 0,         -1,        0  },
+	{ "Gimp",     NULL,       NULL,       0,            1,          0,          0,                 0,         -1,        0  },
+	{ "firefox",  NULL,       NULL,       1 << 8,       0,          0,          0,                -1,         -1,        0  },
+	{ NULL,       NULL,   "scratchpad",   0,            1,          1,          0,                 0,         -1,       's' },
 };                                                                      
 
 /* layout(s) */

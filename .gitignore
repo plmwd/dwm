@@ -55,3 +55,5 @@ dkms.conf
 dwm
 dwm-msg
 yajl*
+*.orig
+*.rej
