@@ -54,5 +54,6 @@ dkms.conf
 # DWM
 dwm
 dwm-msg
-yajl*.c
-yajl*.h
+yajl*
+*.orig
+*.rej
