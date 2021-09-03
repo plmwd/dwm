@@ -1,0 +1,25 @@
+#!/bin/zsh
+# https://github.com/mihirlad55/dwm/blob/patched/startdwm
+# test
+
+logfile=/home/paulw/.dwm.log
+
+dwmlog() {
+  string="[$(date "+%b %d %T")] DWM: "
+  if [[ -n "$@" ]]; then
+    echo "$string$@" >> $logfile
+  else
+    read X && echo "$string$X" >> $logfile
+  fi
+}
+
+dwmlog "Starting DWM..."
+while true; do
+  # Temp fix for logging
+  dwm 2>> $logfile >> $logfile
+
+  # Cleanup
+  dwmlog "Restarting DWM..."
+  rm /tmp/dwm.sock
+  killall -q polybar
+done
