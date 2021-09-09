@@ -111,8 +111,8 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,		XK_x,      spawn,	   {.v = logoutcmd } },
 
 	// Layout
-	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+	{ MODKEY,                       XK_comma,  setmfact,       {.f = -0.05} },
+	{ MODKEY,                       XK_period, setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_n,      incnmaster,     {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_n,      incnmaster,     {.i = -1 } },
 	{ MODKEY|ControlMask,		XK_comma,  cyclelayout,    {.i = -1 } },
@@ -129,16 +129,16 @@ static Key keys[] = {
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_z,      focusstack,     {.i = 0 } },
-	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
+	{ MODKEY,                       XK_l,      focusmon,       {.i = +1 } },
+	{ MODKEY,                       XK_h,      focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 
 	// Client Movement
 	{ MODKEY|ShiftMask,             XK_j,      movestack,      {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_h,      tagmon,         {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_l,      tagmon,         {.i = +1 } },
 	{ MODKEY|ShiftMask,		XK_z,	   zoom,	   {0} },
 
 	// Workspace
