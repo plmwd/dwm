@@ -39,6 +39,7 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating  isterminal  CenterThisWindow  noswallow   monitor    scratch key */
 	{ "kitty",    NULL,       NULL,       0, 	    0,          1,          0,                 0,         -1,        0  },
+	{ "ranger",   NULL,       NULL,       0, 	    0,          1,          0,                 0,         -1,        0  },
 	{ "Gimp",     NULL,       NULL,       0,            1,          0,          0,                 0,         -1,        0  },
 	{ "firefox",  NULL,       NULL,       1 << 8,       0,          0,          0,                -1,         -1,        0  },
 	{ NULL,       NULL,   "scratchpad",   0,            1,          1,          0,                 0,         -1,       's' },
@@ -86,9 +87,16 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
+// static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", "#292d3e", "-nf", "#717cb4", "-sb", "#444267", "-sf", "#ab47bc", NULL };
+static const char *dmenucmd[] = { "sh", "-c", "$HOME/.config/rofi/launchers/misc/launcher.sh", NULL };
 static const char *termcmd[]  = { "kitty", NULL };
-static const char *logoutcmd[] = { "killall", "startdwm", NULL};
+static const char *logoutcmd[] = { "killall", "startdwm", NULL };
+static const char *screenshotcmd[] = { "flameshot", "gui", NULL };
+static const char *sleepcmd[] = { "systemctl", "suspend", NULL };
+static const char *shutdowncmd[] = { "shutdown", "now", NULL };
+static const char *rebootcmd[] = { "shutdown", "-r", "now", NULL };
+static const char *rangercmd[] = { "kitty", "ranger", NULL };
+static const char *beatscmd[] = { "sh", "-c", "$HOME/.config/rofi/scripts/rofi-beats", NULL };
 
 /*First arg only serves to match against key in rules*/
 static const char *scratchpadcmd[] = {"s", "kitty", "-t", "scratchpad", NULL}; 
@@ -96,25 +104,31 @@ static const char *scratchpadcmd[] = {"s", "kitty", "-t", "scratchpad", NULL};
 #include "movestack.c"
 static Key keys[] = {
 	/* modifier                     key        function        argument */
+        // Programs
+	{ MODKEY|ShiftMask,             XK_s,				spawn,          {.v = screenshotcmd } },
+	{ MODKEY,                       XK_e,      	spawn,          {.v = rangercmd } },
+	{ MODKEY|ShiftMask,             XK_m,				spawn,          {.v = beatscmd } },
+
 	// UI
-	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
-	{ MODKEY,            		XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_grave,  togglescratch,  {.v = scratchpadcmd } },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
-	{ MODKEY|Mod4Mask,              XK_u,      incrgaps,       {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_u,      incrgaps,       {.i = -1 } },
-	{ MODKEY|Mod4Mask,              XK_0,      togglegaps,     {0} },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_0,      defaultgaps,    {0} },
-	{ MODKEY,                       XK_f,      togglefullscr,  {0} },
-	{ MODKEY|ShiftMask,             XK_q,      killclient,     {0} },
-	{ MODKEY|ControlMask,		XK_q,	   quit,	   {0} },
-	{ MODKEY|ControlMask,		XK_x,      spawn,	   {.v = logoutcmd } },
+	{ MODKEY,                       XK_d,      	spawn,          {.v = dmenucmd } },
+	{ MODKEY,            		        XK_Return, 	spawn,          {.v = termcmd } },
+	{ MODKEY,                       XK_grave,  	togglescratch,  {.v = scratchpadcmd } },
+	{ MODKEY,                       XK_b,      	togglebar,      {0} },
+	{ MODKEY|Mod4Mask,              XK_u,      	incrgaps,       {.i = +1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    XK_u,      	incrgaps,       {.i = -1 } },
+	{ MODKEY|Mod4Mask,              XK_0,      	togglegaps,     {0} },
+	{ MODKEY|Mod4Mask|ShiftMask,    XK_0,      	defaultgaps,    {0} },
+	{ MODKEY,                       XK_f,      	togglefullscr,  {0} },
+	{ MODKEY|ShiftMask,             XK_q,      	killclient,     {0} },
+	{ MODKEY|ControlMask,						XK_c,				quit,						{0} },
+	{ MODKEY|ControlMask,						XK_q,				spawn,					{.v = logoutcmd } },
+	{ MODKEY|ControlMask,						XK_x,      	spawn,	   			{.v = shutdowncmd } },
+	{ MODKEY|ControlMask,						XK_r,      	spawn,	   			{.v = rebootcmd } },
+	{ MODKEY|ControlMask,						XK_s,      	spawn,	   			{.v = sleepcmd } },
 
 	// Layout
 	{ MODKEY,                       XK_comma,  setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_period, setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_n,      incnmaster,     {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_n,      incnmaster,     {.i = -1 } },
 	{ MODKEY|ControlMask,		XK_comma,  cyclelayout,    {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_period, cyclelayout,    {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
